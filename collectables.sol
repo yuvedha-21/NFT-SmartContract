@@ -29,6 +29,8 @@ mapping(address => bool) public allowList;
     function unpause() public onlyOwner {
         _unpause();
     }
+    
+    //to change the state of minting - open or close minting [access ony to owner]
 
 function editMintWindow(
     bool _publicMintOpen,
@@ -48,6 +50,8 @@ allowListMintOpen=_allowListMintOpen;
         _tokenIdCounter.increment();
         _safeMint(msg.sender, tokenId); 
     }
+    
+//to allow people to mint at normal price 
 
     function publicMint() public  payable{
         require(publicMintOpen,"publicMint Closed");
@@ -58,12 +62,14 @@ allowListMintOpen=_allowListMintOpen;
         _safeMint(msg.sender, tokenId);
         // _setTokenURI(tokenId, uri);
     }
+//to withdraw the amount from the contract address - Access only to owner
 
 function withdraw(address _addr) external onlyOwner{
     //get the balance of the contract
     uint256 balance = address(this).balance;
     payable(_addr).transfer(balance);
 }
+//the provided address will get previlage to Mint NFT at lower price
 
 function setAllowList(address[] calldata addresses) external onlyOwner{
 for(uint256 i=0;i<addresses.length;i++){
